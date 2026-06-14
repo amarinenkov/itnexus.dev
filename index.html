@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IT Nexus — мобильная и продуктовая разработка</title>
+<meta name="description" content="IT Nexus — разработка мобильных и веб-приложений. 18+ лет в IT, команда инженеров, выстроенные процессы и стабильные продукты." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png" />
+<link rel="icon" href="assets/favicon/favicon.ico" sizes="any" />
+<link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon-180.png" />
+<style>
+  :root {
+    --bg: #fbfbfa;
+    --bg-soft: #f4f4f2;
+    --ink: #121316;
+    --muted: #6b6f76;
+    --line: #e6e6e2;
+    --accent: #3a3aff;        /* глубокий indigo — единственный акцент */
+    --accent-soft: #ecedff;
+    --radius: 16px;
+    --maxw: 1080px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "ss01", "cv01";
+  }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ---------- NAV ---------- */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(251,251,250,0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+  }
+  .logo {
+    font-weight: 700; font-size: 18px; letter-spacing: -0.02em;
+    display: flex; align-items: center; gap: 9px;
+    color: var(--ink); text-decoration: none;
+  }
+  .logo .mark { display: block; flex: none; }
+  .nav-links { display: flex; gap: 30px; align-items: center; }
+  .nav-links a:not(.btn) {
+    color: var(--muted); text-decoration: none; font-size: 14.5px;
+    font-weight: 500; transition: color .15s;
+  }
+  .nav-links a:not(.btn):hover { color: var(--ink); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 14.5px; font-weight: 600;
+    padding: 11px 20px; border-radius: 999px;
+    transition: transform .15s, background .15s, box-shadow .15s;
+  }
+  .btn:hover { transform: translateY(-1px); background: #2a2aff; box-shadow: 0 8px 20px -8px rgba(58,58,255,0.5); }
+  .btn.ghost {
+    background: transparent; color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .btn.ghost:hover { background: var(--bg-soft); color: var(--ink); transform: translateY(-1px); }
+  @media (max-width: 720px){ .nav-links a:not(.btn){ display:none; } }
+
+  /* ---------- HERO ---------- */
+  .hero { padding: 96px 0 80px; position: relative; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 500; color: var(--accent);
+    background: var(--accent-soft);
+    padding: 6px 14px; border-radius: 999px;
+    margin-bottom: 26px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .hero h1 {
+    font-size: clamp(38px, 6vw, 68px);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    max-width: 16ch;
+    margin-bottom: 26px;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p.lead {
+    font-size: clamp(17px, 2.2vw, 21px);
+    color: var(--muted);
+    max-width: 54ch;
+    margin-bottom: 38px;
+  }
+  .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .hero-stats {
+    display: flex; gap: 56px; margin-top: 72px;
+    border-top: 1px solid var(--line); padding-top: 36px;
+    flex-wrap: wrap;
+  }
+  .hero-stats .stat .num {
+    font-size: 40px; font-weight: 700; letter-spacing: -0.03em;
+  }
+  .hero-stats .stat .lbl { color: var(--muted); font-size: 14.5px; margin-top: 2px; }
+
+  /* ---------- SECTION SHELL ---------- */
+  section.block { padding: 84px 0; border-top: 1px solid var(--line); }
+  .sec-head { margin-bottom: 48px; max-width: 60ch; }
+  .sec-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--accent); font-weight: 500;
+    letter-spacing: 0.02em; margin-bottom: 14px; display: block;
+  }
+  .sec-head h2 {
+    font-size: clamp(28px, 4vw, 42px);
+    letter-spacing: -0.03em; line-height: 1.1; font-weight: 700;
+  }
+  .sec-head p { color: var(--muted); font-size: 18px; margin-top: 16px; }
+
+  /* ---------- SERVICES ---------- */
+  .grid { display: grid; gap: 18px; }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 860px){ .grid-3 { grid-template-columns: 1fr; } }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 30px 28px;
+    transition: transform .18s, box-shadow .18s, border-color .18s;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px -24px rgba(18,19,22,0.25);
+    border-color: #d8d8d4;
+  }
+  .card .ico {
+    width: 42px; height: 42px; border-radius: 11px;
+    background: var(--accent-soft); color: var(--accent);
+    display: grid; place-items: center; margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 17px;
+  }
+  .card h3 { font-size: 19px; letter-spacing: -0.01em; margin-bottom: 9px; }
+  .card p { color: var(--muted); font-size: 15px; }
+
+  /* ---------- EXPERTISE / TAGS ---------- */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+  @media (max-width: 860px){ .split { grid-template-columns: 1fr; gap: 36px; } }
+  .tags { display: flex; flex-wrap: wrap; gap: 10px; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px; color: var(--ink);
+    background: var(--bg-soft); border: 1px solid var(--line);
+    padding: 7px 13px; border-radius: 8px;
+  }
+  .ex-list { list-style: none; display: grid; gap: 22px; }
+  .ex-list li { display: flex; gap: 16px; align-items: flex-start; }
+  .ex-list .k {
+    flex: none; width: 22px; height: 22px; margin-top: 2px;
+    border-radius: 6px; background: var(--accent); color: #fff;
+    display: grid; place-items: center; font-size: 12px; font-weight: 700;
+  }
+  .ex-list h4 { font-size: 16.5px; margin-bottom: 3px; }
+  .ex-list p { color: var(--muted); font-size: 14.5px; }
+
+  /* ---------- EXPERIENCE ---------- */
+  .timeline { display: grid; gap: 0; }
+  .tl-item {
+    display: grid; grid-template-columns: 150px 1fr; gap: 28px;
+    padding: 26px 0; border-top: 1px solid var(--line);
+  }
+  .tl-item:first-child { border-top: none; }
+  .tl-item .when { font-family: 'JetBrains Mono', monospace; color: var(--muted); font-size: 14px; padding-top: 2px; }
+  .tl-item h4 { font-size: 18px; letter-spacing: -0.01em; }
+  .tl-item .role { color: var(--accent); font-size: 14px; font-weight: 500; margin: 3px 0 8px; }
+  .tl-item p { color: var(--muted); font-size: 15px; }
+  @media (max-width: 720px){ .tl-item { grid-template-columns: 1fr; gap: 8px; } }
+
+  /* ---------- CTA / CONTACT ---------- */
+  .contact-box {
+    background: var(--accent-soft);
+    border: 1px solid #dcddff;
+    border-radius: 24px; padding: 72px 56px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .contact-box::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(620px 320px at 50% -15%, rgba(58,58,255,0.10), transparent 70%);
+  }
+  .contact-box > * { position: relative; }
+  .contact-box h2 {
+    font-size: clamp(28px, 4vw, 44px); letter-spacing: -0.03em;
+    line-height: 1.08; margin-bottom: 16px; color: var(--ink);
+  }
+  .contact-box p { color: var(--muted); font-size: 18px; max-width: 48ch; margin: 0 auto 34px; }
+  .contact-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn.light { background: var(--accent); color: #fff; }
+  .btn.light:hover { background: #2a2aff; color: #fff; }
+  .btn.outline { background: #fff; color: var(--ink); border: 1px solid #d3d4f5; }
+  .btn.outline:hover { background: #fff; color: var(--accent); border-color: var(--accent); transform: translateY(-1px); }
+
+  /* ---------- FOOTER ---------- */
+  footer { padding: 48px 0 60px; border-top: 1px solid var(--line); }
+  .foot {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+    color: var(--muted); font-size: 14px;
+  }
+  .foot a { color: var(--muted); text-decoration: none; }
+  .foot a:hover { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo" aria-label="IT Nexus — на главную">
+      <svg class="mark" width="30" height="30" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke="var(--accent)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"><line x1="26" y1="28" x2="26" y2="68"/><line x1="26" y1="28" x2="70" y2="68"/><line x1="70" y1="28" x2="70" y2="68"/></g>
+        <circle cx="48" cy="48" r="13" fill="var(--accent)" fill-opacity="0.14"/>
+        <g fill="var(--ink)"><circle cx="26" cy="28" r="6"/><circle cx="26" cy="68" r="6"/><circle cx="70" cy="28" r="6"/><circle cx="70" cy="68" r="6"/></g>
+        <circle cx="48" cy="48" r="8" fill="var(--accent)"/>
+      </svg>
+      IT&nbsp;Nexus
+    </a>
+    <nav class="nav-links">
+      <a href="#services">Услуги</a>
+      <a href="#expertise">Экспертиза</a>
+      <a href="#experience">Опыт</a>
+      <a href="#contact" class="btn">Связаться</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">// mobile &amp; product engineering</span>
+    <h1>Собираем мобильные продукты, которые <em>работают</em>.</h1>
+    <p class="lead">
+      От идеи до релиза в сторах — mobile, web и бэкенд под ключ.
+      Выстраиваем процессы, повышаем стабильность и сокращаем time-to-market.
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn">Обсудить проект →</a>
+      <a href="#experience" class="btn ghost">Посмотреть опыт</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat"><div class="num">18+</div><div class="lbl">лет экспертизы в IT</div></div>
+      <div class="stat"><div class="num">10+</div><div class="lbl">лет в мобильной разработке</div></div>
+      <div class="stat"><div class="num">99%</div><div class="lbl">crash-free пользователей</div></div>
+      <div class="stat"><div class="num">5&nbsp;дн.</div><div class="lbl">средний TTM на релиз</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="block" id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">01 — что делаем</span>
+      <h2>Ведём разработку полного цикла</h2>
+      <p>Создаём ваш продукт от первого прототипа до стабильного приложения в сторах — и дальше развиваем его вместе с вами.</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="ico">⌘</div>
+        <h3>Мобильные приложения</h3>
+        <p>Android и iOS: Kotlin, Jetpack Compose, многомодульная архитектура, автотесты и CI/CD. Публикация в Google Play, App Store и RuStore.</p>
+      </div>
+      <div class="card">
+        <div class="ico">&lt;/&gt;</div>
+        <h3>Веб и бэкенд</h3>
+        <p>API, сервисная логика, интеграции с внешними системами и 1С, работа с данными. Современный стек, надёжность под нагрузкой.</p>
+      </div>
+      <div class="card">
+        <div class="ico">↗</div>
+        <h3>Процессы и стабильность</h3>
+        <p>Выстраивание разработки, roadmap, автотесты, мониторинг инцидентов, сокращение TTM и технического долга. Прозрачный процесс для заказчика.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section class="block" id="expertise">
+  <div class="wrap split">
+    <div>
+      <span class="sec-tag">02 — экспертиза</span>
+      <h2 style="font-size:clamp(28px,4vw,42px);letter-spacing:-0.03em;line-height:1.1;">Глубоко в технологиях, спокойно в процессах</h2>
+      <p style="color:var(--muted);font-size:17px;margin-top:18px;">
+        За плечами — продуктовые и проектные команды, highload-логистика
+        и медиа-сервисы с аудиторией 5+ млн пользователей. Делаем не «фичу»,
+        а устойчивый продукт, который не разваливается после релиза.
+      </p>
+      <div class="tags" style="margin-top:26px;">
+        <span class="tag">Kotlin</span><span class="tag">Java</span>
+        <span class="tag">Jetpack&nbsp;Compose</span><span class="tag">Coroutines</span>
+        <span class="tag">Flow</span><span class="tag">RxJava</span>
+        <span class="tag">Dagger</span><span class="tag">Retrofit</span>
+        <span class="tag">Room</span><span class="tag">Camera2</span>
+        <span class="tag">Firebase</span><span class="tag">REST&nbsp;API</span>
+        <span class="tag">CI/CD</span><span class="tag">PostgreSQL</span>
+      </div>
+    </div>
+    <ul class="ex-list">
+      <li><span class="k">↑</span><div><h4>Стабильность</h4><p>Crash-free пользователей с 80% до 99%, мониторинг инцидентов, регламент автотестов.</p></div></li>
+      <li><span class="k">⏱</span><div><h4>Time-to-market</h4><p>Сокращение TTM с 30 до 5–14 дней за счёт автоматизации сборки и тестирования.</p></div></li>
+      <li><span class="k">⚙</span><div><h4>Архитектура</h4><p>Перевод проектов на Jetpack Compose и многомодульный подход, разбор техдолга.</p></div></li>
+      <li><span class="k">★</span><div><h4>Команда</h4><p>Сыгранная команда инженеров, выстроенные процессы и единый контур взаимодействия с заказчиком.</p></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="block" id="experience">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">03 — опыт</span>
+      <h2>Продукты, которые мы уже довели до результата</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="when">2024 — н.в.</div>
+        <div>
+          <h4>B2B логистическая платформа</h4>
+          <div class="role">Команда 10 человек · mobile, backend, QA, DevOps</div>
+          <p>Приложение для подбора курьерских служб с доставкой день-в-день. Crash-free 99%, перевод на Jetpack Compose, аудит безопасности модулей.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="when">2022 — 2024</div>
+        <div>
+          <h4>Мобильные приложения для исследований</h4>
+          <div class="role">Команда 9 человек · mobile, frontend, backend</div>
+          <p>5 приложений с AI-помощником, многомодульная архитектура, регламент автотестов (−30% времени тестирования), A/B-тесты, работа на слабых устройствах.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="when">2017 — 2022</div>
+        <div>
+          <h4>Мобильная платформа в логистике</h4>
+          <div class="role">Команда 20 человек · аналитика, разработка, QA, DevOps</div>
+          <p>B2B-платформа: заявки, маршруты, контроль перевозок. Средний TTM 5 дней, прозрачный процесс разработки, внедрение AI-инструментов.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="when">2015 — 2017</div>
+        <div>
+          <h4>Медиа-сервисы</h4>
+          <div class="role">Продуктовая команда · аудитория 5+ млн</div>
+          <p>Приложения с большой аудиторией, улучшение UI/UX, регулярные релизы, выстраивание и обучение мобильной команды.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="block" id="contact">
+  <div class="wrap">
+    <div class="contact-box">
+      <h2>Расскажите о задаче —<br/>предложим, как её решить.</h2>
+      <p>Оценим объём, предложим стек и команду, дадим честные сроки. Без воды.</p>
+      <div class="contact-actions">
+        <a href="mailto:sergeev.ilya.a@yandex.ru" class="btn light">Написать на почту</a>
+        <a href="https://t.me/isergeev" class="btn outline" target="_blank" rel="noopener">Telegram →</a>
+        <a href="tel:+79670979119" class="btn outline">+7 (967) 097-91-19</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot">
+    <div class="logo" style="font-size:16px;">
+      <svg class="mark" width="26" height="26" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke="var(--accent)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"><line x1="26" y1="28" x2="26" y2="68"/><line x1="26" y1="28" x2="70" y2="68"/><line x1="70" y1="28" x2="70" y2="68"/></g>
+        <g fill="var(--ink)"><circle cx="26" cy="28" r="6"/><circle cx="26" cy="68" r="6"/><circle cx="70" cy="28" r="6"/><circle cx="70" cy="68" r="6"/></g>
+        <circle cx="48" cy="48" r="8" fill="var(--accent)"/>
+      </svg>
+      IT&nbsp;Nexus
+    </div>
+    <div>© 2026 · ИП Сергеев И. А. · ИНН 695001088890</div>
+    <div style="display:flex;gap:18px;flex-wrap:wrap;">
+      <a href="tel:+79670979119">+7 (967) 097-91-19</a>
+      <a href="mailto:sergeev.ilya.a@yandex.ru">Связаться по почте</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
