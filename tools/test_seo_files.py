@@ -45,6 +45,21 @@ class SeoFilesTest(unittest.TestCase):
             with self.subTest(snippet=snippet):
                 self.assertIn(snippet, html)
 
+    def test_index_contains_yandex_metrika_counter(self):
+        html = read("index.html")
+        expected = [
+            "https://mc.yandex.ru/metrika/tag.js?id=109836893",
+            "ym(109836893, 'init'",
+            "webvisor:true",
+            "clickmap:true",
+            "accurateTrackBounce:true",
+            "trackLinks:true",
+            "https://mc.yandex.ru/watch/109836893",
+        ]
+        for snippet in expected:
+            with self.subTest(snippet=snippet):
+                self.assertIn(snippet, html)
+
 
 if __name__ == "__main__":
     unittest.main()
